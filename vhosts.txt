@@ -1,18 +1,27 @@
-<VirtualHost *:80>
-DocumentRoot "D:/xampp/htdocs"
+<VirtualHost *:8080>
+DocumentRoot "C:\xampp\htdocs\"
 ServerName localhost
 </VirtualHost>
-<VirtualHost *:80>
-DocumentRoot "D:/xampp/app/bookstore/public"
+
+<VirtualHost *:8080>
+DocumentRoot "C:\xampp\htdocs\bookstore"
 ServerName bookstore.localhost
+ServerAlias www.bookstore.localhost
+
 # Set access permission
-<Directory "D:/xampp/app/bookstore/public">
-Options Indexes FollowSymLinks Includes ExecCGI
-AllowOverride All
-Require all granted
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . index.php [L]
+<Directory "C:\xampp\htdocs\bookstore">
+    Options Indexes FollowSymLinks Includes ExecCGI
+    AllowOverride All
+    Require all granted
+    
+    # Enable URL rewriting
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . index.php [L]
 </Directory>
+
+# Error and access logs
+ErrorLog "logs/bookstore.localhost-error.log"
+CustomLog "logs/bookstore.localhost-access.log" common
 </VirtualHost>
